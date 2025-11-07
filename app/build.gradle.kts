@@ -154,10 +154,10 @@ android {
         compose = true
         buildConfig = true
     }
-    composeOptions {
+   /* composeOptions {
         // 参考 https://developer.android.google.cn/jetpack/androidx/releases/compose-kotlin
         kotlinCompilerExtensionVersion = "1.5.15"
-    }
+    }*/
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
