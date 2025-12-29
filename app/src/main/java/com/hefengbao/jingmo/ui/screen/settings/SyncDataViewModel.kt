@@ -632,8 +632,9 @@ class DataViewModel @Inject constructor(
 
     fun setClassicalLiteratureWritingPreviousCount(count: Int, total: Int) {
         writingCurrentCount.value = count
+
         _classicalLiteratureWritingResultProgress.value =
-            writingCurrentCount.value.toFloat() / total
+            (if (writingCurrentCount.value.toFloat() > total) total.toFloat() else writingCurrentCount.value.toFloat()) / total
     }
 
     fun syncClassicalLiteratureWriting(total: Int, version: Int) {
@@ -661,7 +662,7 @@ class DataViewModel @Inject constructor(
 
                         writingCurrentCount.value += response.data.data.size
                         _classicalLiteratureWritingResultProgress.value =
-                            writingCurrentCount.value.toFloat() / total
+                            (if (writingCurrentCount.value.toFloat() > total) total.toFloat() else writingCurrentCount.value.toFloat()) / total
 
                         // 记录进度
                         preference.setClassicalLiteratureWritingCurrentPage(writingCurrentPage.value)
@@ -675,7 +676,7 @@ class DataViewModel @Inject constructor(
                     }
                 }
             }
-            if (writingCurrentCount.value == total) {
+            if (writingCurrentCount.value >= total) {
                 preference.setClassicalLiteratureWritingVersion(version)
                 preference.setClassicalLiteratureWritingCurrentPage(1)
                 preference.setClassicalLiteratureWritingCurrentCount(0)
