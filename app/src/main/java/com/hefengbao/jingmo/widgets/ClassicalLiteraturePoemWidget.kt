@@ -64,7 +64,7 @@ class PoemWidget(
 
         Column(
             modifier = modifier.fillMaxSize()
-                .background(GlanceTheme.colors.background)
+                .background(GlanceTheme.colors.widgetBackground)
                 .padding(16.dp)
                 .cornerRadius(16.dp),
             verticalAlignment = Alignment.Top,
@@ -112,7 +112,7 @@ class PoemWidget(
                     }
                     item {
                         Text(
-                            modifier = modifier.padding(top =4.dp),
+                            modifier = modifier.padding(top = 4.dp),
                             text = content,
                             style = TextStyle(
                                 fontSize = 18.sp,

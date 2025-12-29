@@ -20,6 +20,7 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import androidx.glance.appwidget.appWidgetBackground
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.provideContent
@@ -65,7 +66,8 @@ class SentenceWidget(
         val sentence by repository.getRandom().collectAsState(initial = null)
         Column(
             modifier = modifier.fillMaxSize()
-                .background(GlanceTheme.colors.background)
+                .background(GlanceTheme.colors.widgetBackground)
+                .appWidgetBackground()
                 .padding(16.dp)
                 .cornerRadius(16.dp),
             verticalAlignment = Alignment.CenterVertically,
