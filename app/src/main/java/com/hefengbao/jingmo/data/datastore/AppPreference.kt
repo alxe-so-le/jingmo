@@ -54,7 +54,10 @@ class AppPreference(
     val appStatus: Flow<AppStatus> = context.app.data.map {
         AppStatus(
             captureTextColorString = it[PREF_CAPTURE_TEXT_COLOR] ?: "#FFFFFF",
+            captureTextSize = it[PREF_CAPTURE_TEXT_SIZE] ?: 18,
             captureBackgroundColorString = it[PREF_CAPTURE_BACKGROUND_COLOR] ?: "#065279",
+            capturePaddingX = it[PREF_CAPTURE_PADDING_X] ?: 16,
+            capturePaddingY = it[PREF_CAPTURE_PADDING_Y] ?: 32,
             themeBrand = ThemeBrand.from(it[PREF_THEME_BRAND] ?: ThemeBrand.DEFAULT.name),
             darkThemeConfig = DarkThemeConfig.from(
                 it[PREF_DARK_THEME_CONFIG] ?: DarkThemeConfig.FOLLOW_SYSTEM.name
@@ -68,8 +71,17 @@ class AppPreference(
     suspend fun setCaptureTextColor(color: String) =
         setString(context, PREF_CAPTURE_TEXT_COLOR, color)
 
+    suspend fun setCaptureTextSize(size: Int) =
+        setInt(context, PREF_CAPTURE_TEXT_SIZE, size)
+
     suspend fun setCaptureBackgroundColor(color: String) =
         setString(context, PREF_CAPTURE_BACKGROUND_COLOR, color)
+
+    suspend fun setCapturePaddingX(padding: Int) =
+        setInt(context, PREF_CAPTURE_PADDING_X, padding)
+
+    suspend fun setCapturePaddingY(padding: Int) =
+        setInt(context, PREF_CAPTURE_PADDING_Y, padding)
 
     suspend fun setThemeBrand(brand: ThemeBrand) =
         setString(context, PREF_THEME_BRAND, brand.name)
@@ -88,6 +100,9 @@ class AppPreference(
 
     companion object {
         private val PREF_CAPTURE_TEXT_COLOR = stringPreferencesKey("key_capture_text_color")
+        private val PREF_CAPTURE_TEXT_SIZE = intPreferencesKey("key_capture_text_size")
+        private val PREF_CAPTURE_PADDING_X = intPreferencesKey("key_capture_padding_x")
+        private val PREF_CAPTURE_PADDING_Y = intPreferencesKey("key_capture_padding_y")
         private val PREF_CAPTURE_BACKGROUND_COLOR =
             stringPreferencesKey("key_capture_background_color")
         private val PREF_THEME_BRAND = stringPreferencesKey("key_theme_brand")

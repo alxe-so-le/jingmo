@@ -124,8 +124,14 @@ class PreferenceRepositoryImpl @Inject constructor(
 
     override suspend fun setCaptureTextColor(color: String) = appStatus.setCaptureTextColor(color)
 
+    override suspend fun setCaptureTestSize(size: Int) = appStatus.setCaptureTextSize(size)
+
     override suspend fun setCaptureBackgroundColor(color: String) =
         appStatus.setCaptureBackgroundColor(color)
+
+    override suspend fun setCapturePaddingX(padding: Int) = appStatus.setCapturePaddingX(padding)
+
+    override suspend fun setCapturePaddingY(padding: Int) = appStatus.setCapturePaddingY(padding)
 
     override suspend fun setShowSyncDataTip(show: Boolean) = appStatus.setShowSyncDataTip(show)
 

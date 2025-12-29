@@ -10,11 +10,9 @@
 package com.hefengbao.jingmo.ui.screen.chinese.idiom
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.base.CaptureViewModel
 import com.hefengbao.jingmo.data.repository.chinese.IdiomRepository
-import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
-import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
 import com.hefengbao.jingmo.ui.screen.chinese.idiom.nav.IdiomCaptureArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,9 +23,7 @@ import javax.inject.Inject
 class IdiomCaptureViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     idiomRepository: IdiomRepository,
-    colorRepository: ColorRepository,
-    preferenceRepository: PreferenceRepository
-) : CaptureViewModel(colorRepository, preferenceRepository) {
+) : ViewModel() {
     private val args: IdiomCaptureArgs = IdiomCaptureArgs(savedStateHandle)
 
     val idiomEntity = idiomRepository.get(args.id.toInt()).stateIn(

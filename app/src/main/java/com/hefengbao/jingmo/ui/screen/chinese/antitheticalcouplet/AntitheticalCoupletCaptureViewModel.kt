@@ -10,11 +10,9 @@
 package com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.base.CaptureViewModel
 import com.hefengbao.jingmo.data.repository.chinese.AntitheticalCoupletRepository
-import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
-import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
 import com.hefengbao.jingmo.ui.screen.chinese.antitheticalcouplet.nav.AntitheticalCoupletCaptureArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,9 +23,7 @@ import javax.inject.Inject
 class AntitheticalCoupletCaptureViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     repository: AntitheticalCoupletRepository,
-    colorRepository: ColorRepository,
-    preferenceRepository: PreferenceRepository
-) : CaptureViewModel(colorRepository, preferenceRepository) {
+) : ViewModel() {
     private val args: AntitheticalCoupletCaptureArgs =
         AntitheticalCoupletCaptureArgs(savedStateHandle)
 

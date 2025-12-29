@@ -1,11 +1,9 @@
 package com.hefengbao.jingmo.ui.screen.chinese.poetry
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.base.CaptureViewModel
 import com.hefengbao.jingmo.data.repository.chinese.ModernPoetryRepository
-import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
-import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
 import com.hefengbao.jingmo.ui.screen.chinese.poetry.nav.ModernPoetryCaptureArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,9 +14,7 @@ import javax.inject.Inject
 class ModernPoetryCaptureViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     poetryRepository: ModernPoetryRepository,
-    colorRepository: ColorRepository,
-    preferenceRepository: PreferenceRepository
-) : CaptureViewModel(colorRepository, preferenceRepository) {
+) : ViewModel() {
     private val args = ModernPoetryCaptureArgs(savedStateHandle)
 
     val poetryEntity = poetryRepository.get(args.id.toInt()).stateIn(

@@ -9,22 +9,19 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.wisecrack
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.WisecrackEntity
-import com.hefengbao.jingmo.data.model.AppStatus
-import com.hefengbao.jingmo.data.model.traditionalculture.ChineseColor
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
 
 @Composable
@@ -33,56 +30,39 @@ fun ChineseWisecrackCaptureRoute(
     onBackClick: () -> Unit
 ) {
     val chineseWisecrackEntity by viewModel.chineseWisecrackEntity.collectAsState()
-    val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
-    val appStatus by viewModel.appStatus.collectAsState(null)
 
     ChineseWisecrackCaptureScreen(
         onBackClick = onBackClick,
         chineseWisecrackEntity = chineseWisecrackEntity,
-        onTextColorChange = { viewModel.setCaptureTextColor(it) },
-        onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
-        colors = chineseColors,
-        appStatus = appStatus
     )
 }
 
 @Composable
 private fun ChineseWisecrackCaptureScreen(
     onBackClick: () -> Unit,
-    onTextColorChange: (String) -> Unit,
-    onBackgroundColorChange: (String) -> Unit,
     chineseWisecrackEntity: WisecrackEntity?,
-    colors: List<ChineseColor>,
-    appStatus: AppStatus?
 ) {
-    appStatus?.let {
-        CaptureScaffold(
-            colors = colors,
-            onBackClick = onBackClick,
-            onTextColorChange = onTextColorChange,
-            onBackgroundColorChange = onBackgroundColorChange
-        ) {
-            val tColor = appStatus.captureTextColor
+    CaptureScaffold(
+        onBackClick = onBackClick,
+    ) { tColor, tSize ->
 
-            chineseWisecrackEntity?.let { entity ->
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(appStatus.captureBackgroundColor)
-                        .padding(vertical = 96.dp, horizontal = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = entity.riddle,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = tColor
-                    )
-                    Text(
-                        text = "—— ${entity.answer}",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = tColor
-                    )
-                }
+        chineseWisecrackEntity?.let { entity ->
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = entity.riddle,
+                    color = tColor,
+                    fontSize = tSize.sp
+                )
+                Text(
+                    text = "—— ${entity.answer}",
+                    color = tColor,
+                    fontSize = tSize.sp,
+                    fontStyle = FontStyle.Italic
+                )
             }
         }
     }

@@ -46,9 +46,27 @@ open class CaptureViewModel @Inject constructor(
         }
     }
 
+    fun setCaptureTextSize(size: Int) {
+        viewModelScope.launch {
+            preferenceRepository.setCaptureTestSize(size)
+        }
+    }
+
     fun setCaptureBackgroundColor(color: String) {
         viewModelScope.launch {
             preferenceRepository.setCaptureBackgroundColor(color)
+        }
+    }
+
+    fun setCapturePaddingX(padding: Int) {
+        viewModelScope.launch {
+            preferenceRepository.setCapturePaddingX(padding)
+        }
+    }
+
+    fun setCapturePaddingY(padding: Int) {
+        viewModelScope.launch {
+            preferenceRepository.setCapturePaddingY(padding)
         }
     }
 }

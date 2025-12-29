@@ -52,7 +52,10 @@ interface PreferenceRepository {
 
     fun getAppStatus(): Flow<AppStatus>
     suspend fun setCaptureTextColor(color: String)
+    suspend fun setCaptureTestSize(size: Int)
     suspend fun setCaptureBackgroundColor(color: String)
+    suspend fun setCapturePaddingX(padding: Int)
+    suspend fun setCapturePaddingY(padding: Int)
     suspend fun setShowSyncDataTip(show: Boolean)
     suspend fun setUserAgreementVersion(version: Int)
 }

@@ -69,8 +69,10 @@
     <string name="save_success">保存成功</string>
     <string name="save_fail">保存失败</string>
     <string name="search">查找</string>
-    <string name="background_color">背景颜色</string>
-    <string name="text_color">文字颜色</string>
+    <string name="capture_background_color">背景颜色</string>
+    <string name="capture_text_color">文字颜色</string>
+    <string name="capture_text_size">字体大小</string>
+    <string name="capture_padding">边距</string>
     <string name="touch_to_play_video">轻触播放视频</string>
     <string name="black">黑色</string>
     <string name="white">白色</string>

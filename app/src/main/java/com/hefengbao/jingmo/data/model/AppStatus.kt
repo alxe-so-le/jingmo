@@ -17,7 +17,10 @@ import com.hefengbao.jingmo.data.model.theme.ThemeBrand
 
 data class AppStatus(
     val captureTextColorString: String,
+    val captureTextSize: Int,
     val captureBackgroundColorString: String,
+    val capturePaddingX: Int,
+    val capturePaddingY: Int,
     val themeBrand: ThemeBrand,
     val darkThemeConfig: DarkThemeConfig,
     val useDynamicColor: Boolean,

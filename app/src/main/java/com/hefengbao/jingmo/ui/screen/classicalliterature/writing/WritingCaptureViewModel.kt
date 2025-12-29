@@ -10,11 +10,9 @@
 package com.hefengbao.jingmo.ui.screen.classicalliterature.writing
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.base.CaptureViewModel
 import com.hefengbao.jingmo.data.repository.classicalliterature.WritingRepository
-import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
-import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
 import com.hefengbao.jingmo.ui.screen.classicalliterature.writing.nav.WritingCaptureArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,9 +23,7 @@ import javax.inject.Inject
 class WritingCaptureViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     writingRepository: WritingRepository,
-    colorRepository: ColorRepository,
-    preferenceRepository: PreferenceRepository
-) : CaptureViewModel(colorRepository, preferenceRepository) {
+) : ViewModel() {
     private val args: WritingCaptureArgs = WritingCaptureArgs(savedStateHandle)
 
     val writingEntity = writingRepository.get(args.poemId.toInt()).stateIn(

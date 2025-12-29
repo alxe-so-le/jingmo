@@ -10,11 +10,9 @@
 package com.hefengbao.jingmo.ui.screen.chinese.wisecrack
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.base.CaptureViewModel
 import com.hefengbao.jingmo.data.repository.chinese.WisecrackRepository
-import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
-import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
 import com.hefengbao.jingmo.ui.screen.chinese.wisecrack.nav.ChineseWisecrackCaptureArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,9 +23,7 @@ import javax.inject.Inject
 class WisecrackCaptureViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     wisecrackRepository: WisecrackRepository,
-    colorRepository: ColorRepository,
-    preferenceRepository: PreferenceRepository
-) : CaptureViewModel(colorRepository, preferenceRepository) {
+) : ViewModel() {
     private val args: ChineseWisecrackCaptureArgs = ChineseWisecrackCaptureArgs(savedStateHandle)
 
     val chineseWisecrackEntity =

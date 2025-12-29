@@ -9,7 +9,6 @@
 
 package com.hefengbao.jingmo.ui.screen.chinese.idiom
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,10 +26,9 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hefengbao.jingmo.data.database.entity.chinese.IdiomEntity
-import com.hefengbao.jingmo.data.model.AppStatus
-import com.hefengbao.jingmo.data.model.traditionalculture.ChineseColor
 import com.hefengbao.jingmo.ui.component.CaptureScaffold
 
 @Composable
@@ -39,16 +37,10 @@ fun IdiomCaptureRoute(
     onBackClick: () -> Unit
 ) {
     val idiomEntity by viewModel.idiomEntity.collectAsState(initial = null)
-    val chineseColors by viewModel.colors.collectAsState(initial = emptyList())
-    val appStatus by viewModel.appStatus.collectAsState(null)
 
     IdiomCaptureScreen(
         onBackClick = onBackClick,
         idiomEntity = idiomEntity,
-        appStatus = appStatus,
-        onTextColorChange = { viewModel.setCaptureTextColor(it) },
-        onBackgroundColorChange = { viewModel.setCaptureBackgroundColor(it) },
-        colors = chineseColors
     )
 }
 
@@ -56,150 +48,177 @@ fun IdiomCaptureRoute(
 private fun IdiomCaptureScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    appStatus: AppStatus?,
-    onTextColorChange: (String) -> Unit,
-    onBackgroundColorChange: (String) -> Unit,
     idiomEntity: IdiomEntity?,
-    colors: List<ChineseColor>
 ) {
-    appStatus?.let {
-        CaptureScaffold(
-            colors = colors,
-            onBackClick = onBackClick,
-            onTextColorChange = onTextColorChange,
-            onBackgroundColorChange = onBackgroundColorChange
-        ) {
-            val tColor = appStatus.captureTextColor
+    CaptureScaffold(
+        onBackClick = onBackClick,
+    ) { tColor, tSize ->
 
-            idiomEntity?.let {
+
+        idiomEntity?.let {
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(24.dp, 48.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
                 Column(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .background(appStatus.captureBackgroundColor)
-                        .padding(24.dp, 48.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
+                    Text(
+                        text = idiomEntity.pinyin,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = tColor
+                    )
+                    Text(
+                        text = idiomEntity.word,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = tColor
+                    )
+                }
+                idiomEntity.explanation?.let {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(
-                            text = idiomEntity.pinyin,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = tColor
+                        Title(
+                            text = "释义",
+                            color = tColor,
                         )
                         Text(
-                            text = idiomEntity.word,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = tColor
+                            text = it,
+                            color = tColor,
+                            fontSize = tSize.sp,
+                            lineHeight = (tSize + 16).sp
                         )
                     }
-                    idiomEntity.explanation?.let {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Title(
-                                text = "释义",
-                                color = tColor,
-                            )
+                }
+
+                idiomEntity.source?.let { source ->
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Title(text = "出处", color = tColor)
+
+                        val text = buildAnnotatedString {
+                            source.text?.let { append(it) }
+                            source.book?.let {
+                                withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
+                                    append("《${it}》")
+                                }
+                            }
+                        }
+
+                        Text(
+                            text = text,
+                            color = tColor,
+                            fontSize = tSize.sp,
+                            lineHeight = (tSize + 16).sp
+                        )
+                    }
+                }
+
+                idiomEntity.quote?.let { quote ->
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Title(text = "名著用例", color = tColor)
+
+                        val text = buildAnnotatedString {
+                            quote.text?.let { append(it) }
+                            quote.book?.let {
+                                withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
+                                    append("《${it}》")
+                                }
+                            }
+                        }
+
+                        Text(
+                            text = text,
+                            color = tColor,
+                            fontSize = tSize.sp,
+                            lineHeight = (tSize + 16).sp
+                        )
+                    }
+                }
+
+                idiomEntity.usage?.let {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Title(text = "用法介绍", color = tColor)
+                        Text(
+                            text = it,
+                            color = tColor,
+                            fontSize = tSize.sp,
+                            lineHeight = (tSize + 16).sp
+                        )
+                    }
+                }
+
+                idiomEntity.example?.let { example ->
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Title(text = "示例", color = tColor)
+
+                        val text = buildAnnotatedString {
+                            example.text?.let { append(it) }
+                            example.book?.let {
+                                withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
+                                    append("《${it}》")
+                                }
+                            }
+                        }
+
+                        Text(
+                            text = text,
+                            color = tColor,
+                            fontSize = tSize.sp,
+                            lineHeight = (tSize + 16).sp
+                        )
+                    }
+                }
+
+                idiomEntity.similar?.let {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Title(text = "同义成语", color = tColor)
+                        Text(
+                            text = it.joinToString("、"),
+                            color = tColor,
+                            fontSize = tSize.sp,
+                            lineHeight = (tSize + 16).sp
+                        )
+                    }
+                }
+
+                idiomEntity.opposite?.let {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Title(text = "反义成语", color = tColor)
+                        Text(
+                            text = it.joinToString("、"),
+                            color = tColor,
+                            fontSize = tSize.sp,
+                            lineHeight = (tSize + 16).sp
+                        )
+                    }
+                }
+
+                idiomEntity.story?.let { list ->
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Title(text = "成语故事", color = tColor)
+                        list.forEach {
                             Text(
                                 text = it,
-                                color = tColor
+                                color = tColor,
+                                fontSize = tSize.sp,
+                                lineHeight = (tSize + 16).sp
                             )
-                        }
-                    }
-
-                    idiomEntity.source?.let { source ->
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Title(text = "出处", color = tColor)
-
-                            val text = buildAnnotatedString {
-                                source.text?.let { append(it) }
-                                source.book?.let {
-                                    withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
-                                        append("《${it}》")
-                                    }
-                                }
-                            }
-
-                            Text(text = text, color = tColor)
-                        }
-                    }
-
-                    idiomEntity.quote?.let { quote ->
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Title(text = "名著用例", color = tColor)
-
-                            val text = buildAnnotatedString {
-                                quote.text?.let { append(it) }
-                                quote.book?.let {
-                                    withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
-                                        append("《${it}》")
-                                    }
-                                }
-                            }
-
-                            Text(text = text, color = tColor)
-                        }
-                    }
-
-                    idiomEntity.usage?.let {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Title(text = "用法介绍", color = tColor)
-                            Text(text = it, color = tColor)
-                        }
-                    }
-
-                    idiomEntity.example?.let { example ->
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Title(text = "示例", color = tColor)
-
-                            val text = buildAnnotatedString {
-                                example.text?.let { append(it) }
-                                example.book?.let {
-                                    withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
-                                        append("《${it}》")
-                                    }
-                                }
-                            }
-
-                            Text(text = text, color = tColor)
-                        }
-                    }
-
-                    idiomEntity.similar?.let {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Title(text = "同义成语", color = tColor)
-                            Text(text = it.joinToString("、"), color = tColor)
-                        }
-                    }
-
-                    idiomEntity.opposite?.let {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Title(text = "反义成语", color = tColor)
-                            Text(text = it.joinToString("、"), color = tColor)
-                        }
-                    }
-
-                    idiomEntity.story?.let { list ->
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Title(text = "成语故事", color = tColor)
-                            list.forEach {
-                                Text(text = it, color = tColor)
-                            }
                         }
                     }
                 }

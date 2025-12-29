@@ -10,12 +10,10 @@
 package com.hefengbao.jingmo.ui.screen.classicalliterature.sentence
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hefengbao.jingmo.base.CaptureViewModel
 import com.hefengbao.jingmo.data.database.entity.classicalliterature.SentenceEntity
 import com.hefengbao.jingmo.data.repository.classicalliterature.SentenceRepository
-import com.hefengbao.jingmo.data.repository.settings.PreferenceRepository
-import com.hefengbao.jingmo.data.repository.traditionalculture.ColorRepository
 import com.hefengbao.jingmo.ui.screen.classicalliterature.sentence.nav.ClassicalLiteratureSentenceCaptureArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,9 +26,7 @@ import javax.inject.Inject
 class SentenceCaptureViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val sentenceRepository: SentenceRepository,
-    colorRepository: ColorRepository,
-    preferenceRepository: PreferenceRepository
-) : CaptureViewModel(colorRepository, preferenceRepository) {
+) : ViewModel() {
     private val args: ClassicalLiteratureSentenceCaptureArgs =
         ClassicalLiteratureSentenceCaptureArgs(savedStateHandle)
 
